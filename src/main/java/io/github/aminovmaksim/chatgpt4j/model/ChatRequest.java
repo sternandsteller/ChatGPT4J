@@ -1,14 +1,13 @@
 package io.github.aminovmaksim.chatgpt4j.model;
 
-import io.github.aminovmaksim.chatgpt4j.model.enums.ModelType;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Collections;
-import java.util.List;
 
 @Data
 @Builder
@@ -17,61 +16,86 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChatRequest {
 
-    /**
-     * ID of the model to use. Currently, only gpt-3.5-turbo and gpt-3.5-turbo-0301 are supported.
-     */
-    private String model = ModelType.GPT_3_5_TURBO.getName();
+	/**
+	 * ID of the model to use. Currently, only gpt-3.5-turbo and gpt-3.5-turbo-0301
+	 * are supported.
+	 */
+	private String model;
 
-    /**
-     * The messages to generate chat completions for
-     */
-    private List<ChatMessage> messages;
+	public void setModel(String model) {
+		this.model = model;
+	}
 
-    /**
-     * What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-     */
-    private Float temperature;
+	/**
+	 * The messages to generate chat completions for
+	 */
+	private List<ChatMessage> messages;
 
-    /**
-     * An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-     */
-    private Float top_p;
+	/**
+	 * What sampling temperature to use, between 0 and 2. Higher values like 0.8
+	 * will make the output more random, while lower values like 0.2 will make it
+	 * more focused and deterministic.
+	 */
+	private Float temperature;
 
-    /**
-     * How many chat completion choices to generate for each input message.
-     */
-    private Integer n;
+	/**
+	 * An alternative to sampling with temperature, called nucleus sampling, where
+	 * the model considers the results of the tokens with top_p probability mass. So
+	 * 0.1 means only the tokens comprising the top 10% probability mass are
+	 * considered.
+	 */
+	private Float top_p;
 
-    /**
-     * The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens).
-     */
-    private Integer max_tokens;
+	/**
+	 * How many chat completion choices to generate for each input message.
+	 */
+	private Integer n;
 
-    /**
-     * Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
-     */
-    private Float presence_penalty;
+	/**
+	 * The maximum number of tokens allowed for the generated answer. By default,
+	 * the number of tokens the model can return will be (4096 - prompt tokens).
+	 */
+	private Integer max_tokens;
 
-    /**
-     * Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
-     */
-    private Float frequency_penalty;
+	public void setMax_tokens(int max_tokens) {
+		this.max_tokens = max_tokens;
+	}
 
-    /**
-     * A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
-     */
-    private String user;
+	/**
+	 * Number between -2.0 and 2.0. Positive values penalize new tokens based on
+	 * whether they appear in the text so far, increasing the model's likelihood to
+	 * talk about new topics.
+	 */
+	private Float presence_penalty;
 
-    public ChatRequest(ChatMessage chatMessage) {
-        this.messages = Collections.singletonList(chatMessage);
-    }
+	/**
+	 * Number between -2.0 and 2.0. Positive values penalize new tokens based on
+	 * their existing frequency in the text so far, decreasing the model's
+	 * likelihood to repeat the same line verbatim.
+	 */
+	private Float frequency_penalty;
 
-    public ChatRequest(List<ChatMessage> messages) {
-        this.messages = messages;
-    }
+	/**
+	 * A unique identifier representing your end-user, which can help OpenAI to
+	 * monitor and detect abuse.
+	 */
+	private String user;
 
-    public ChatRequest(String message) {
-        this.messages = Collections.singletonList(new ChatMessage(message));
-    }
+	public String prompt;
+
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
+	}
+
+	public ChatRequest(List<ChatMessage> messages) {
+		this.messages = messages;
+	}
+
+	public ChatRequest(String prompt) {
+		this.prompt = prompt;
+	}
+
+	public ChatRequest() {
+	}
 
 }

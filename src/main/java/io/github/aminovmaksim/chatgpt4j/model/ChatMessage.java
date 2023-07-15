@@ -10,10 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatMessage {
 
-    private String role = MessageRole.USER.getName();
-    private String content;
+	private String role = MessageRole.USER.getName();
+	private String content;
 
-    public ChatMessage(String content) {
-        this.content = content;
-    }
+	public String getContent() {
+		return content;
+	}
+
+	public ChatMessage(String content) {
+		this.content = content;
+	}
 }

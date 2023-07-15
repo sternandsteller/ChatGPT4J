@@ -1,11 +1,11 @@
 package io.github.aminovmaksim.chatgpt4j.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -13,63 +13,57 @@ import java.util.List;
 @AllArgsConstructor
 public class ChatResponse {
 
-    /**
-     * Identifier of the response
-     */
-    private String id;
+	private Long created;
 
-    /**
-     * Type of request
-     */
-    private String object;
+	private Usage usage;
 
-    /**
-     * Timestamp in UNIX format
-     */
-    private Long created;
+	private Error error;
 
-    /**
-     * List of responses
-     */
-    private List<Choice> choices;
+	public Error getError() {
+		return error;
+	}
 
-    /**
-     * Info about token usage for request
-     */
-    private Usage usage;
+	public String response;
 
-    /**
-     * Error info
-     */
-    private Error error;
+	public String getResponse() {
+		return choices.get(0).getText();
+	}
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Choice {
+	private List<Choice> choices;
 
-        private Integer index;
-        private ChatMessage message;
-        private String finish_reason;
-    }
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Choice {
+		private String text;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Usage {
+		public String getText() {
+			return text;
+		}
+	}
 
-        private Integer prompt_tokens;
-        private Integer completion_tokens;
-        private Integer total_tokens;
-    }
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Usage {
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Error {
+		private Integer prompt_tokens;
+		private Integer completion_tokens;
+		private Integer total_tokens;
+	}
 
-        private String message;
-        private String type;
-        private String code;
-    }
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Error {
+
+		public String message;
+
+		public String getMessage() {
+			return message;
+		}
+
+		private String type;
+		private String code;
+	}
 }
